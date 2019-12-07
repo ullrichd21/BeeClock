@@ -5,11 +5,36 @@
     <style type="text/css">
       * {
         background: #000000;
-        overflow: hidden;
+        /* overflow: hidden; */
+        color: #e6b710;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #output {
+        color: #e6b710;
+        background: #212121;
+        text-align: center;
+        margin: 0 auto;
+        width: 33%;
+        font-size: 300%;
+      }
+      button {
+        background-color: #e6b710;
+        font-weight: normal;
+        color: #000000;
+        padding: 1% 2%;
+        margin: 5% 0;
+        border: none;
+        cursor: pointer;
+        width: auto;
+      }
+
+      #AMPM {
+        background: #3189c1;
       }
       .container {
         top: 50%;
-        background: #212121;
+        /* background: #212121; */
+
         display: flex;
         justify-content: center;
         margin: auto;
@@ -18,16 +43,52 @@
       }
       .center {
         margin: 0;
+        padding: 0;
         position: absolute;
-        width: 100%;
+        width: 80%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
       }
+
+      .inputform {
+        font-size: 100%;
+        left:50%;
+        width:100%;
+        text-align: center;
+        display: inline-block;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance:textfield;
+        width: 10%;
+        padding: 1% 2%;
+        margin: 5% 0;
+        background: #212121;
+        border: none;/*0px solid #e6b710;*/
+        box-sizing: border-box;
+      }
+      @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        .inputform {
+          display: block;
+        }
+      }
       #clock {
-        font-family: Arial, Helvetica, sans-serif;
         color: #e6b710;
         background: #212121;
+        border-radius: 0.5em;
         text-align: center;
         padding: 2%;
         width: 100%;
@@ -40,6 +101,14 @@
     <div class="container">
       <div class="center">
         <div id="clock"></div>
+        <div class="inputform">
+          <input type="number" name="hrs" placeholder="Hours" id="inHrs"/>
+          <input type="number" name="min" placeholder="Minutes" id="inMin"/>
+          <input type="number" name="sec" placeholder="Seconds" id="inSec"/>
+          <button type="button" id="AMPM" onclick="toggleAMPM();">AM</button>
+          <button type="button" onclick="convertBee();">Convert to Bee!</button>
+        </div>
+        <p id="output"></p>
 
         <script type="text/javascript">
           setInterval(displayclock, 500);
@@ -54,6 +123,47 @@
 
             document.getElementById("clock").innerHTML = beeTime + " Bee";
             document.getElementById("title").innerHTML = beeTime + " Bee";
+          }
+
+          function convertBee() {
+            var output = document.getElementById("output");
+            var hrs = document.getElementById("inHrs").value;
+            var min = document.getElementById("inMin").value;
+            var sec = document.getElementById("inSec").value;
+
+
+            if (hrs + min + sec != 0) {
+              if (hrs < 24) {
+                if (document.getElementById("AMPM").innerHTML == "PM") {
+                  hrs = (+hrs + +12);
+                }
+                var secTime = (hrs * 3600) + (min * 60) + sec;
+                var beeTime = secTime / 5700;
+                beeTime = beeTime.toFixed(4);
+                output.innerHTML = beeTime + " Bee";
+                output.style.color = "";
+                output.style.background = "";
+                output.style.fontSize = "";
+              }
+            } else {
+              output.innerHTML = "Please enter a time!";
+              output.style.fontSize = "100%";
+              output.style.background = "#000000";
+              output.style.color = "#ff0000";
+            }
+          }
+
+          function toggleAMPM() {
+            var button = document.getElementById("AMPM");
+            var button_text = button.innerHTML;
+
+            if (button_text == "AM") {
+              button.innerHTML = "PM";
+              button.style.background="#232055";
+            } else {
+              button.innerHTML = "AM";
+              button.style.background="#3189c1";
+            }
           }
         </script>
       </div>
