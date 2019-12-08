@@ -131,6 +131,7 @@
           setInterval(displayclock, 500);
 
           var clockType="Bee";
+          var currentColor="#e6b710";
           var keyVal=5700;
 
           function displayclock() {
@@ -162,7 +163,7 @@
                 var beeTime = secTime / keyVal;
                 beeTime = beeTime.toFixed(4);
                 output.innerHTML = beeTime + " " + clockType;
-                output.style.color = "";
+                output.style.color = currentColor;
                 output.style.background = "";
                 output.style.fontSize = "";
               }
@@ -190,21 +191,28 @@
           function toggleClock() {
             if (clockType == "Bee") {
               clockType = "Swamp";
+              currentColor = "#218b32";
               document.getElementById("convertButton").innerHTML = "Convert to " + clockType;
-              document.getElementById("clock").style.color = "#218b32";
-              document.getElementById("changeClock").style.backgroundColor = "#218b32";
-              document.getElementById("output").style.color = "#218b32";
-              document.getElementById("convertButton").style.background = "#218b32";
+              document.getElementById("clock").style.color = currentColor;
+              document.getElementById("changeClock").style.backgroundColor = currentColor;
+              document.getElementById("output").style.color = currentColor;
+              document.getElementById("convertButton").style.background = currentColor;
               document.getElementById("changeClock").style.backgroundImage = "url(img/swamp.png)";
+              document.getElementById("output").innerHTML = "";
+              document.getElementById("output").color = currentColor;
+              document.body.style.color = currentColor;
               keyVal = 201;
             } else {
               clockType = "Bee";
+              currentColor = "#e6b710";
               document.getElementById("convertButton").innerHTML = "Convert to " + clockType;
               document.getElementById("clock").style.color = "";
               document.getElementById("changeClock").style.backgroundColor = "";
               document.getElementById("output").style.color = "";
               document.getElementById("convertButton").style.background = "";
               document.getElementById("changeClock").style.backgroundImage = "";
+              document.getElementById("output").innerHTML = "";
+              document.getElementById("output").color = "";
               keyVal = 5700;
             }
           }
